@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://jmix.io/schema/flowui/menu">
+
+    <menu id="application" title="msg://gr.maravelias.myeconomics/menu.application.title" opened="true">
+        <item view="myec_User.list" title="msg://gr.maravelias.myeconomics.view.user/UserListView.title"/>
+		<item view="myec_Trader.list" title="msg://gr.maravelias.myeconomics.view.trader/traderListView.title"/>
+		<item view="myec_BankAccount.list"
+			  title="msg://gr.maravelias.myeconomics.view.bankaccount/bankAccountListView.title"/>
+		<item view="myec_BankTransaction.list"
+			  title="msg://gr.maravelias.myeconomics.view.banktransaction/bankTransactionListView.title"/>
+		<item view="myec_ExpenseInvoice.list"
+			  title="msg://gr.maravelias.myeconomics.view.expenseinvoice/expenseInvoiceListView.title"/>
+	</menu>
+
+</menu-config>

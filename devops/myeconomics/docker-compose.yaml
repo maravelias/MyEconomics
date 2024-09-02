@@ -1,0 +1,8 @@
+services:
+
+  myeconomics:
+    container_name: myeconomics
+    image: docker.io/maravelias/myeconomics:0.0.1
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

@@ -1,0 +1,44 @@
+volumes:
+  db_data:
+    driver: local
+  pgadmin:
+    driver: local
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:16.4
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: p@ssw0rd!
+      POSTGRES_DB: myec
+      PGDATA: /data/postgres
+    volumes:
+      - db_data:/data/postgres
+    ports:
+      - 5431:5432
+      - 5432:5432
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: giorgos@maravelias.eu
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "8982:80"
+    restart: unless-stopped
+
+  myeconomics:
+    container_name: myeconomics
+    image: docker.io/maravelias/myeconomics:0.0.1-SNAPSHOT
+    environment:
+      MAIN_DATASOURCE_URL: jdbc:postgresql://postgres:5432/myec
+
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

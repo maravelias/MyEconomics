@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+	  xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+	  title="msg://expenseInvoiceListView.title"
+	  focusComponent="expenseInvoicesDataGrid">
+	<data>
+		<collection id="expenseInvoicesDc"
+					class="gr.maravelias.myeconomics.entity.ExpenseInvoice">
+			<fetchPlan extends="_base">
+				<property name="trader" fetch="AUTO" fetchPlan="_base"/>
+			</fetchPlan>
+			<loader id="expenseInvoicesDl" readOnly="true">
+				<query>
+					<![CDATA[select e from myec_ExpenseInvoice e]]>
+				</query>
+			</loader>
+		</collection>
+	</data>
+	<facets>
+		<dataLoadCoordinator auto="true"/>
+		<urlQueryParameters>
+			<genericFilter component="genericFilter"/>
+			<pagination component="pagination"/>
+		</urlQueryParameters>
+	</facets>
+	<actions>
+		<action id="selectAction" type="lookup_select"/>
+		<action id="discardAction" type="lookup_discard"/>
+	</actions>
+	<layout>
+		<genericFilter id="genericFilter"
+					   dataLoader="expenseInvoicesDl">
+			<properties include=".*"/>
+		</genericFilter>
+		<hbox id="buttonsPanel" classNames="buttons-panel">
+			<button id="createBtn" action="expenseInvoicesDataGrid.create"/>
+			<button id="editBtn" action="expenseInvoicesDataGrid.edit"/>
+			<button id="refreshBtn" action="expenseInvoicesDataGrid.refresh"/>
+			<button id="removeBtn" action="expenseInvoicesDataGrid.remove"/>
+			<simplePagination id="pagination" dataLoader="expenseInvoicesDl"/>
+		</hbox>
+		<dataGrid id="expenseInvoicesDataGrid"
+				  width="100%"
+				  minHeight="20em"
+				  dataContainer="expenseInvoicesDc"
+				  columnReorderingAllowed="true"
+				  selectionMode="MULTI">
+			<actions>
+				<action id="create" type="list_create"/>
+				<action id="edit" type="list_edit"/>
+				<action id="refresh" type="list_refresh"/>
+				<action id="remove" type="list_remove"/>
+			</actions>
+			<columns resizable="true">
+				<column property="transactionDate"/>
+				<column property="ammount"/>
+				<column property="invoiceNumber"/>
+				<column property="trader"/>
+			</columns>
+		</dataGrid>
+		<hbox id="lookupActions" visible="false">
+			<button id="selectBtn" action="selectAction"/>
+			<button id="discardBtn" action="discardAction"/>
+		</hbox>
+	</layout>
+</view>
