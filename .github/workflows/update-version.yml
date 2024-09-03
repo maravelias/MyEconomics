@@ -1,0 +1,40 @@
+   name: Update Build Version on Pull Request
+
+   on:
+     pull_request:
+       types: [opened, synchronize]
+
+   jobs:
+     update_version:
+       runs-on: ubuntu-latest
+
+       steps:
+       - name: Checkout code
+         uses: actions/checkout@v3
+
+       - name: Get Pull Request Number
+         id: pr
+         run: echo "PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
+
+       - name: Set Build Version
+         id: build_version
+         run: |
+           # Get current date and PR number to generate a unique version
+           DATE=$(date +'%Y%m%d')
+           PR_NUMBER=${{ github.event.number }}
+           VERSION="1.0.0-${DATE}-PR${PR_NUMBER}"
+           echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+       - name: Update build.gradle
+         run: |
+           BUILD_VERSION=${{ env.VERSION }}
+           sed -i "s/version = '.*'/version = '${BUILD_VERSION}'/" build.gradle
+
+       - name: Commit changes
+         run: |
+           git config --global user.name "github-actions[bot]"
+           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+           git checkout -b pr/${{ github.event.number }}
+           git add build.gradle
+           git commit -m "Update build version to ${{ env.VERSION }}"
+           git push origin pr/${{ github.event.number }}
