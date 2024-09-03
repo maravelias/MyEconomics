@@ -17,6 +17,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      REGISTRY_KEY : ${{ vars.REGISTRY_KEY }}
+      REGISTRY_USERNAME: ${{ vars.REGISTRY_USERNAME }}
     permissions:
       contents: read
 
