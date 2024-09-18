@@ -8,7 +8,8 @@ import org.springframework.lang.Nullable;
 public enum TransactionType implements EnumClass<String> {
 
     DEPOSIT("DEPOSIT"),
-    WITHDRAW("WITHDRAW");
+    WITHDRAW("WITHDRAW"),
+    TRANSFER_TO_TRADER("TRANSFER_TO_TRADER");
 
     private final String id;
 
