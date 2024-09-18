@@ -9,6 +9,7 @@ import com.vaadin.flow.router.Route;
 import gr.maravelias.myeconomics.entity.Trader;
 import gr.maravelias.myeconomics.view.main.MainView;
 import io.jmix.core.validation.group.UiCrossFieldChecks;
+import io.jmix.flowui.component.textarea.JmixTextArea;
 import io.jmix.flowui.component.validation.ValidationErrors;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.kit.component.button.JmixButton;
@@ -54,8 +55,13 @@ public class TraderListView extends StandardListView<Trader> {
     @ViewComponent
     private HorizontalLayout detailActions;
 
+    @ViewComponent
+    private JmixTextArea notesField ;
+
     @Subscribe
     public void onInit(final InitEvent event) {
+        notesField.getStyle().set("resize", "both");
+        notesField.getStyle().set("overflow", "auto");
         updateControls(false);
     }
 

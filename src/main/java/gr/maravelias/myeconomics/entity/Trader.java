@@ -13,9 +13,21 @@ import jakarta.validation.constraints.NotNull;
 public class Trader extends CommonEntity {
     @InstanceName @Column(name = "TITLE", nullable = false) @NotNull private String title;
 
+    @Column(name = "CREDIT_DAYS") private Integer creditDays;
+
+    @Column(name = "NOTES") private String notes;
+
     @Column(name = "VAT", length = 9) private String vat;
 
     @Column(name = "TRADER_TYPE", nullable = false) @NotNull private String traderType;
+
+    public String getNotes() {return notes;}
+
+    public void setNotes(String notes) {this.notes = notes;}
+
+    public Integer getCreditDays() {return creditDays;}
+
+    public void setCreditDays(Integer creditDays) {this.creditDays = creditDays;}
 
     public TraderType getTraderType() {return traderType == null ? null : TraderType.fromId(traderType);}
 
