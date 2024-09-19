@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+	objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+	<changeSet id="1" author="myec">
+		<createTable tableName="MYEC_BANK_ACCOUNT">
+			<column name="ID" type="UUID">
+				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_MYEC_BANK_ACCOUNT"/>
+			</column>
+			<column name="VERSION" type="INT">
+				<constraints nullable="false"/>
+			</column>
+			<column name="CREATED_BY" type="VARCHAR(255)"/>
+			<column name="CREATED_DATE" type="DATETIME"/>
+			<column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+			<column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+			<column name="TITLE" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="IBAN" type="VARCHAR(255)"/>
+			<column name="INITIAL_AMOUNT" type="DECIMAL(10, 2)"/>
+		</createTable>
+	</changeSet>
+	<changeSet id="2" author="myec">
+		<createTable tableName="MYEC_BANK_TRANSACTION">
+			<column name="ID" type="UUID">
+				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_MYEC_BANK_TRANSACTION"/>
+			</column>
+			<column name="VERSION" type="INT">
+				<constraints nullable="false"/>
+			</column>
+			<column name="CREATED_BY" type="VARCHAR(255)"/>
+			<column name="CREATED_DATE" type="DATETIME"/>
+			<column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+			<column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+			<column name="BANK_ID" type="UUID">
+				<constraints nullable="false"/>
+			</column>
+			<column name="TRANSACTION_TYPE" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="AMOUNT" type="DECIMAL(10, 2)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="TRANSACTION_DATE" type="DATE">
+				<constraints nullable="false"/>
+			</column>
+			<column name="TRADER_ID" type="UUID">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="3" author="myec">
+		<createTable tableName="MYEC_EXPENSE_INVOICE">
+			<column name="ID" type="UUID">
+				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_MYEC_EXPENSE_INVOICE"/>
+			</column>
+			<column name="VERSION" type="INT">
+				<constraints nullable="false"/>
+			</column>
+			<column name="CREATED_BY" type="VARCHAR(255)"/>
+			<column name="CREATED_DATE" type="DATETIME"/>
+			<column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+			<column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+			<column name="TRANSACTION_DATE" type="DATE">
+				<constraints nullable="false"/>
+			</column>
+			<column name="AMOUNT" type="DECIMAL(10, 2)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="INVOICE_NUMBER" type="VARCHAR(255)"/>
+			<column name="TRADER_ID" type="UUID">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="4" author="myec">
+		<createTable tableName="MYEC_TRADER">
+			<column name="ID" type="UUID">
+				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_MYEC_TRADER"/>
+			</column>
+			<column name="VERSION" type="INT">
+				<constraints nullable="false"/>
+			</column>
+			<column name="CREATED_BY" type="VARCHAR(255)"/>
+			<column name="CREATED_DATE" type="DATETIME"/>
+			<column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+			<column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+			<column name="TITLE" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="CREDIT_DAYS" type="INT"/>
+			<column name="NOTES" type="VARCHAR(255)"/>
+			<column name="VAT" type="VARCHAR(9)"/>
+			<column name="TRADER_TYPE" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="5" author="myec">
+		<createIndex indexName="IDX_MYEC_BANK_TRANSACTION_BANK" tableName="MYEC_BANK_TRANSACTION">
+			<column name="BANK_ID"/>
+		</createIndex>
+
+		<addForeignKeyConstraint baseColumnNames="BANK_ID" baseTableName="MYEC_BANK_TRANSACTION"
+								 constraintName="FK_MYEC_BANK_TRANSACTION_ON_BANK" referencedColumnNames="ID"
+								 referencedTableName="MYEC_BANK_ACCOUNT"/>
+	</changeSet>
+	<changeSet id="6" author="myec">
+		<createIndex indexName="IDX_MYEC_BANK_TRANSACTION_TRADER" tableName="MYEC_BANK_TRANSACTION">
+			<column name="TRADER_ID"/>
+		</createIndex>
+
+		<addForeignKeyConstraint baseColumnNames="TRADER_ID" baseTableName="MYEC_BANK_TRANSACTION"
+								 constraintName="FK_MYEC_BANK_TRANSACTION_ON_TRADER" referencedColumnNames="ID"
+								 referencedTableName="MYEC_TRADER"/>
+	</changeSet>
+	<changeSet id="7" author="myec">
+		<createIndex indexName="IDX_MYEC_EXPENSE_INVOICE_TRADER" tableName="MYEC_EXPENSE_INVOICE">
+			<column name="TRADER_ID"/>
+		</createIndex>
+
+		<addForeignKeyConstraint baseColumnNames="TRADER_ID" baseTableName="MYEC_EXPENSE_INVOICE"
+								 constraintName="FK_MYEC_EXPENSE_INVOICE_ON_TRADER" referencedColumnNames="ID"
+								 referencedTableName="MYEC_TRADER"/>
+	</changeSet>
+
+	<changeSet id="8" author="myec">
+		<createView viewName="traders_balances"
+					encoding="UTF-8"
+					fullDefinition="false"
+					remarks="A String"
+					replaceIfExists="false">
+
+
+			WITH latest_transactions AS (
+				SELECT
+					ei.trader_id AS trader_id,
+					t.title AS title,
+					-SUM(ei.amount) AS amount,
+					'Credit' AS type,
+					MAX(ei.transaction_date) AS latest_transaction_date,
+					(CURRENT_DATE - MAX(ei.transaction_date)) AS days_since_last_transaction,
+					COALESCE(MAX(t.credit_days), 0) AS credit_days
+				FROM
+					myec_expense_invoice ei
+						JOIN
+					myec_trader t ON ei.trader_id = t.id
+				GROUP BY
+					ei.trader_id, t.title
+				UNION ALL
+				SELECT
+					bt.trader_id AS trader_id,
+					t.title AS title,
+					SUM(bt.amount) AS amount,
+					'Debit' AS type,
+					MAX(bt.transaction_date) AS latest_transaction_date,
+					(CURRENT_DATE - MAX(bt.transaction_date)) AS days_since_last_transaction,
+					COALESCE(MAX(t.credit_days), 0) AS credit_days
+				FROM
+					myec_bank_transaction bt
+						JOIN
+					myec_trader t ON bt.trader_id = t.id
+				WHERE
+					transaction_type LIKE 'TRANSFER_TO_TRADER'
+				GROUP BY
+					bt.trader_id, t.title
+			),
+				 latest_credit_transactions AS (
+					 SELECT
+						 trader_id,
+						 MAX(latest_transaction_date) AS latest_transaction_date
+					 FROM
+						 latest_transactions
+					 WHERE
+						 type = 'Credit'
+					 GROUP BY
+						 trader_id
+				 )
+			SELECT
+				lt.trader_id,
+				lt.title,
+				SUM(lt.amount) AS balance,
+				lct.latest_transaction_date,
+				(CURRENT_DATE - lct.latest_transaction_date) AS days_since_last_transaction,
+				lt.credit_days
+			FROM
+				latest_transactions lt
+					JOIN
+				latest_credit_transactions lct ON lt.trader_id = lct.trader_id
+			GROUP BY
+				lt.trader_id, lt.title, lct.latest_transaction_date , lt.credit_days;
+
+		</createView>
+	</changeSet>
+</databaseChangeLog>
