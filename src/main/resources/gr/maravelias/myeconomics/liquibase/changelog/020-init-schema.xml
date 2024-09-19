@@ -129,11 +129,11 @@
 	</changeSet>
 
 	<changeSet id="8" author="myec">
-		<createView viewName="traders_balances"
+		<createView viewName="view_traders_balances"
 					encoding="UTF-8"
 					fullDefinition="false"
 					remarks="A String"
-					replaceIfExists="false">
+					replaceIfExists="true">
 
 
 			WITH latest_transactions AS (
