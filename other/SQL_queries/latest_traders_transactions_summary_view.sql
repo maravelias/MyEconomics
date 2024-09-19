@@ -1,57 +1,58 @@
-CREATE VIEW myec.traders_balances AS
+CREATE VIEW traders_balances AS
 WITH latest_transactions AS (
-    SELECT 
+    SELECT
         ei.trader_id AS trader_id,
         t.title AS title,
-        -SUM(ei.ammount) AS amount,
+        -SUM(ei.amount) AS amount,
         'Credit' AS type,
         MAX(ei.transaction_date) AS latest_transaction_date,
         (CURRENT_DATE - MAX(ei.transaction_date)) AS days_since_last_transaction,
         COALESCE(MAX(t.credit_days), 0) AS credit_days
-    FROM 
+    FROM
         myec_expense_invoice ei
-    JOIN 
+            JOIN
         myec_trader t ON ei.trader_id = t.id
-    GROUP BY 
+    GROUP BY
         ei.trader_id, t.title
     UNION ALL
-    SELECT 
+    SELECT
         bt.trader_id AS trader_id,
         t.title AS title,
-        SUM(bt.ammount) AS amount,
+        SUM(bt.amount) AS amount,
         'Debit' AS type,
         MAX(bt.transaction_date) AS latest_transaction_date,
         (CURRENT_DATE - MAX(bt.transaction_date)) AS days_since_last_transaction,
         COALESCE(MAX(t.credit_days), 0) AS credit_days
-    FROM 
+    FROM
         myec_bank_transaction bt
-    JOIN 
+            JOIN
         myec_trader t ON bt.trader_id = t.id
-    WHERE 
+    WHERE
         transaction_type LIKE 'TRANSFER_TO_TRADER'
-    GROUP BY 
+    GROUP BY
         bt.trader_id, t.title
 ),
-latest_credit_transactions AS (
-    SELECT 
-        trader_id,
-        MAX(latest_transaction_date) AS latest_transaction_date
-    FROM 
-        latest_transactions
-    WHERE 
-        type = 'Credit'
-    GROUP BY 
-        trader_id
-)
+     latest_credit_transactions AS (
+         SELECT
+             trader_id,
+             MAX(latest_transaction_date) AS latest_transaction_date
+         FROM
+             latest_transactions
+         WHERE
+             type = 'Credit'
+         GROUP BY
+             trader_id
+     )
 SELECT
     lt.trader_id,
     lt.title,
     SUM(lt.amount) AS balance,
     lct.latest_transaction_date,
-    (CURRENT_DATE - lct.latest_transaction_date) AS days_since_last_transaction
-FROM 
+    (CURRENT_DATE - lct.latest_transaction_date) AS days_since_last_transaction,
+    lt.credit_days
+FROM
     latest_transactions lt
-JOIN 
+        JOIN
     latest_credit_transactions lct ON lt.trader_id = lct.trader_id
-GROUP BY 
-    lt.trader_id, lt.title, lct.latest_transaction_date;
+GROUP BY
+    lt.trader_id, lt.title, lct.latest_transaction_date , lt.credit_days;
