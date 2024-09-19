@@ -20,7 +20,7 @@
 		<formLayout id="form" dataContainer="bankAccountDc">
 			<textField id="titleField" property="title"/>
 			<textField id="ibanField" property="iban"/>
-			<textField id="initialAmmountField" property="initialAmmount"/>
+			<textField id="initialAmmountField" property="initialAmount"/>
 		</formLayout>
 		<hbox id="detailActions">
 			<button id="saveAndCloseBtn" action="saveAction"/>

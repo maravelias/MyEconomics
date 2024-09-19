@@ -18,11 +18,11 @@ public class BankAccount extends CommonEntity {
 
     @Column(name = "IBAN") private String iban;
 
-    @Column(name = "INITIAL_AMMOUNT", precision = 10, scale = 2) private BigDecimal initialAmmount;
+    @Column(name = "INITIAL_AMOUNT", precision = 10, scale = 2) private BigDecimal initialAmount;
 
-    public void setInitialAmmount(BigDecimal initialAmmount) {this.initialAmmount = initialAmmount;}
+    public void setInitialAmount(BigDecimal initialAmmount) {this.initialAmount = initialAmmount;}
 
-    public BigDecimal getInitialAmmount() {return initialAmmount;}
+    public BigDecimal getInitialAmount() {return initialAmount;}
 
     public String getIban() {return iban;}
 

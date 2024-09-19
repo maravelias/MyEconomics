@@ -52,7 +52,7 @@
 			</actions>
 			<columns resizable="true">
 				<column property="transactionType"/>
-				<column property="ammount"/>
+				<column property="amount"/>
 				<column property="transactionDate"/>
 				<column property="trader"/>
 			</columns>

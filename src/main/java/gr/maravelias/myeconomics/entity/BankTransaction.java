@@ -28,7 +28,7 @@ public class BankTransaction extends CommonEntity {
 
     @Column(name = "TRANSACTION_TYPE", nullable = false) @NotNull private String transactionType;
 
-    @NotNull @Column(name = "AMMOUNT", nullable = false, precision = 10, scale = 2) private BigDecimal ammount;
+    @NotNull @Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2) private BigDecimal amount;
 
     @Column(name = "TRANSACTION_DATE", nullable = false) @Temporal(TemporalType.DATE) @NotNull private Date transactionDate;
 
@@ -46,9 +46,9 @@ public class BankTransaction extends CommonEntity {
 
     public void setTransactionDate(Date transactionDate) {this.transactionDate = transactionDate;}
 
-    public BigDecimal getAmmount() {return ammount;}
+    public BigDecimal getAmount() {return amount;}
 
-    public void setAmmount(BigDecimal ammount) {this.ammount = ammount;}
+    public void setAmount(BigDecimal ammount) {this.amount = ammount;}
 
     public BankAccount getBank() {return bank;}
 

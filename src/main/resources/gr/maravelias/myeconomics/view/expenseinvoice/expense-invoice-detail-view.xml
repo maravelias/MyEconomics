@@ -21,7 +21,7 @@
 	<layout>
 		<formLayout id="form" dataContainer="expenseInvoiceDc">
 			<datePicker id="transactionDateField" property="transactionDate"/>
-			<textField id="ammountField" property="ammount"/>
+			<textField id="ammountField" property="amount"/>
 			<textField id="invoiceNumberField" property="invoiceNumber"/>
 			<entityPicker id="traderField" property="trader">
 				<actions>

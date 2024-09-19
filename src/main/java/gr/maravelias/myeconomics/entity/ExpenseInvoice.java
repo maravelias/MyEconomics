@@ -25,15 +25,15 @@ import jakarta.validation.constraints.NotNull;
 public class ExpenseInvoice extends CommonEntity {
     @Column(name = "TRANSACTION_DATE", nullable = false) @Temporal(TemporalType.DATE) @NotNull private Date transactionDate;
 
-    @Column(name = "AMMOUNT", nullable = false, precision = 10, scale = 2) @NotNull private BigDecimal ammount;
+    @Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2) @NotNull private BigDecimal amount;
 
     @Column(name = "INVOICE_NUMBER") private String invoiceNumber;
 
     @OnDeleteInverse(DeletePolicy.DENY) @JoinColumn(name = "TRADER_ID", nullable = false) @NotNull @ManyToOne(fetch = FetchType.LAZY, optional = false) private Trader trader;
 
-    public BigDecimal getAmmount() {return ammount;}
+    public BigDecimal getAmount() {return amount;}
 
-    public void setAmmount(BigDecimal ammount) {this.ammount = ammount;}
+    public void setAmount(BigDecimal ammount) {this.amount = ammount;}
 
     public Trader getTrader() {return trader;}
 

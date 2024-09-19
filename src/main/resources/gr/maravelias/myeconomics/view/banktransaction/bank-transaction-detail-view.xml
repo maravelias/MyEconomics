@@ -28,7 +28,7 @@
 				</actions>
 			</entityPicker>
 			<select id="transactionTypeField" property="transactionType"/>
-			<textField id="ammountField" property="ammount"/>
+			<textField id="ammountField" property="amount"/>
 			<datePicker id="transactionDateField" property="transactionDate"/>
 			<entityPicker id="traderField" property="trader">
 				<actions>
