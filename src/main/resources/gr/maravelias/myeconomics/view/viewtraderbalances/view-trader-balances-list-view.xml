@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+	  xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+	  title="msg://viewTraderBalancesListView.title"
+	  focusComponent="viewTraderBalancesesDataGrid">
+	<data>
+		<collection id="viewTraderBalancesesDc"
+					class="gr.maravelias.myeconomics.entity.ViewTraderBalances">
+			<fetchPlan extends="_base"/>
+			<loader id="viewTraderBalancesesDl" readOnly="true">
+				<query>
+					<![CDATA[select e from myec_ViewTraderBalances e]]>
+				</query>
+			</loader>
+		</collection>
+	</data>
+	<facets>
+		<dataLoadCoordinator auto="true"/>
+		<urlQueryParameters>
+			<genericFilter component="genericFilter"/>
+			<pagination component="pagination"/>
+		</urlQueryParameters>
+	</facets>
+	<actions>
+		<action id="selectAction" type="lookup_select"/>
+		<action id="discardAction" type="lookup_discard"/>
+	</actions>
+	<layout>
+		<genericFilter id="genericFilter"
+					   dataLoader="viewTraderBalancesesDl">
+			<properties include=".*"/>
+		</genericFilter>
+		<hbox id="buttonsPanel" classNames="buttons-panel">
+			<button id="refreshBtn" action="viewTraderBalancesesDataGrid.refresh"/>
+			<simplePagination id="pagination" dataLoader="viewTraderBalancesesDl"/>
+		</hbox>
+		<dataGrid id="viewTraderBalancesesDataGrid"
+				  width="100%"
+				  minHeight="20em"
+				  dataContainer="viewTraderBalancesesDc"
+				  columnReorderingAllowed="true" aggregatable="true" aggregationPosition="BOTTOM">
+			<actions>
+				<action id="refresh" type="list_refresh"/>
+			</actions>
+			<columns resizable="true">
+				<column property="title"/>
+				<column property="balance">
+					<aggregation type="SUM" cellTitle="msg://aggregation.cellTitle"/>
+				</column>
+				<column property="latestTransactionDate"/>
+				<column property="daysSinceLastTransaction"/>
+				<column property="creditDays"/>
+				<column property="risk"/>
+			</columns>
+		</dataGrid>
+		<hbox id="lookupActions" visible="false">
+			<button id="selectBtn" action="selectAction"/>
+			<button id="discardBtn" action="discardAction"/>
+		</hbox>
+	</layout>
+</view>

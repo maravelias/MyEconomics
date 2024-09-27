@@ -5,6 +5,7 @@ import gr.maravelias.myeconomics.entity.BankTransaction;
 import gr.maravelias.myeconomics.entity.CommonEntity;
 import gr.maravelias.myeconomics.entity.ExpenseInvoice;
 import gr.maravelias.myeconomics.entity.Trader;
+import gr.maravelias.myeconomics.entity.ViewTraderBalances;
 import io.jmix.core.entity.KeyValueEntity;
 import io.jmix.flowui.entity.filter.FilterCondition;
 import io.jmix.flowui.entity.filter.FilterValueComponent;
@@ -24,7 +25,7 @@ public interface UiMinimalRole {
 
     String CODE = "ui-minimal";
 
-    @ViewPolicy(viewIds = {"myec_MainView", "myec_Trader.list", "myec_BankAccount.list", "myec_BankAccount.detail", "flowui_AddConditionView", "flowui_GroupFilterCondition.detail", "flowui_PropertyFilterCondition.detail", "flowui_JpqlFilterCondition.detail", "myec_BankTransaction.list", "myec_BankTransaction.detail", "myec_ExpenseInvoice.list", "myec_ExpenseInvoice.detail"})
+    @ViewPolicy(viewIds = {"myec_MainView", "myec_Trader.list", "myec_BankAccount.list", "myec_BankAccount.detail", "flowui_AddConditionView", "flowui_GroupFilterCondition.detail", "flowui_PropertyFilterCondition.detail", "flowui_JpqlFilterCondition.detail", "myec_BankTransaction.list", "myec_BankTransaction.detail", "myec_ExpenseInvoice.list", "myec_ExpenseInvoice.detail", "myec_ViewTraderBalances.list"})
     void main();
 
     @ViewPolicy(viewIds = "myec_LoginView")
@@ -35,7 +36,7 @@ public interface UiMinimalRole {
     @EntityAttributePolicy(entityClass = KeyValueEntity.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
     void keyValueEntity();
 
-    @MenuPolicy(menuIds = {"myec_Trader.list", "myec_BankAccount.list", "myec_BankTransaction.list", "myec_ExpenseInvoice.list"})
+    @MenuPolicy(menuIds = {"myec_Trader.list", "myec_BankAccount.list", "myec_BankTransaction.list", "myec_ExpenseInvoice.list", "myec_ViewTraderBalances.list"})
     void screens();
 
     @EntityAttributePolicy(entityClass = Trader.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
@@ -69,4 +70,8 @@ public interface UiMinimalRole {
     @EntityAttributePolicy(entityClass = ExpenseInvoice.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = ExpenseInvoice.class, actions = EntityPolicyAction.ALL)
     void expenseInvoice();
+
+    @EntityAttributePolicy(entityClass = ViewTraderBalances.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = ViewTraderBalances.class, actions = EntityPolicyAction.READ)
+    void viewTraderBalances();
 }
