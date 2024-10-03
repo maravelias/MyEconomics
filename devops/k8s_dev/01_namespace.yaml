@@ -1,0 +1,11 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: myeconomics
+  finalizers:
+  labels:
+    name: myeconomics
+    kubernetes.io/metadata.name: myeconomics
+spec:
+  finalizers:
+---

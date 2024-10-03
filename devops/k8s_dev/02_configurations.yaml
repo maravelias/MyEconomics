@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myeconomics-config
+  namespace: myeconomics
+data:
+  JAVA_OPTS: "-Dfile.encoding=UTF-8 -Duser.timezone=Europe/Athens"
+  MAIN_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/myeconomics"
+  MAIN_DATASOURCE_USERNAME : "myeconomics"
+  MAIN_DATASOURCE_PASSWORD : ""
+  JMIX_UI_PRODUCTION-MODE : "TRUE"
+  JMIX_UI_TEST-MODE : "FALSE"
+  JMIX_UI_PERFORMANCE-TEST-MODE : "FALSE"
+  UI_LOGIN_DEFAULTUSERNAME : ""
+  UI_LOGIN_DEFAULTPASSWORD: ""

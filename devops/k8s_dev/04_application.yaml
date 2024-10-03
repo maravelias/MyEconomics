@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myeconomics-app
+  namespace: myeconomics
+  labels:
+    app: myeconomics-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myeconomics-app
+  template:
+    metadata:
+      labels:
+        app: myeconomics-app
+    spec:
+      containers:
+        - name: myeconomics-app
+          image: docker.io/maravelias/myeconomics:0.0.1-SNAPSHOT
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: myeconomics-config
+          ports:
+            - containerPort: 8080
+              name: ui8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: 2Gi
+              cpu: 1000m
+            requests:
+              memory: 1Gi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

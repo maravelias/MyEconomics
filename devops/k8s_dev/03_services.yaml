@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myeconomics-app-service
+  namespace: myeconomics
+spec:
+  ports:
+    - name: web8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: myeconomics-app
+  type: ClusterIP
+---
