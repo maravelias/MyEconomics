@@ -34,3 +34,37 @@ spec:
               memory: 1Gi
       dnsPolicy: ClusterFirst
       restartPolicy: Always
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin-deployment
+  namespace: myeconomics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      containers:
+        - name: pgadmin
+          image: dpage/pgadmin4:latest
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              value: "myemail@example.com"
+            - name: PGADMIN_DEFAULT_PASSWORD
+              value: "p@ssw0rd!1"
+            - name: PGADMIN_LISTEN_ADDRESS
+              value: "0.0.0.0"
+            - name: PGADMIN_CONFIG_SERVER_MODE
+              value: "True"
+          ports:
+            - containerPort: 80
+
+---

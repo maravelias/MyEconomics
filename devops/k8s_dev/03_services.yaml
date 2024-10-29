@@ -14,3 +14,17 @@ spec:
     app: myeconomics-app
   type: ClusterIP
 ---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin-service
+  namespace: myeconomics
+spec:
+  selector:
+    app: pgadmin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
