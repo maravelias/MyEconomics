@@ -11,7 +11,7 @@
 			</fetchPlan>
 			<loader id="expenseInvoicesDl" readOnly="true">
 				<query>
-					<![CDATA[select e from myec_ExpenseInvoice e]]>
+					<![CDATA[select e from myec_ExpenseInvoice e order by e.transactionDate DESC ]]>
 				</query>
 			</loader>
 		</collection>

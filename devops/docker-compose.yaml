@@ -11,7 +11,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: p@ssw0rd!
-      POSTGRES_DB: myec
+      POSTGRES_DB: myeconomics
       PGDATA: /data/postgres
     volumes:
       - db_data:/data/postgres
@@ -22,7 +22,7 @@ services:
 
   pgadmin:
     container_name: pgadmin
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:8.12.0
     environment:
       PGADMIN_DEFAULT_EMAIL: giorgos@maravelias.eu
       PGADMIN_DEFAULT_PASSWORD: admin
@@ -37,7 +37,7 @@ services:
     container_name: myeconomics
     image: docker.io/maravelias/myeconomics:0.0.1-SNAPSHOT
     environment:
-      MAIN_DATASOURCE_URL: jdbc:postgresql://postgres:5432/myec
+      MAIN_DATASOURCE_URL: jdbc:postgresql://postgres:5432/myeconomics
 
     ports:
       - "8080:8080"
