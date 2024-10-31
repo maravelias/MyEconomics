@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+	  xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+	  title="msg://traderInfoView.title"
+	  focusComponent="supplierSelect">
+	<data>
+		<collection id="tradersDc"
+					class="gr.maravelias.myeconomics.entity.Trader">
+			<fetchPlan extends="_instance_name">
+				<property name="createdBy"/>
+				<property name="createdDate"/>
+				<property name="lastModifiedBy"/>
+				<property name="lastModifiedDate"/>
+			</fetchPlan>
+			<loader id="tradersDl" readOnly="true">
+				<query>
+					<![CDATA[select e from myec_Trader e where e.traderType like 'SUPPLIER' ]]>
+				</query>
+			</loader>
+		</collection>
+	</data>
+	<facets>
+		<dataLoadCoordinator auto="true"/>
+
+	</facets>
+
+	<layout>
+		<vbox>
+			<select id="supplierSelect" label="Supplier" itemsContainer="tradersDc"
+						helperText="Select an supplier whose address to display" minWidth="20em"/>
+			<hbox>
+				<fragment class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
+				<fragment class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
+			</hbox>
+
+		</vbox>
+	</layout>
+</view>

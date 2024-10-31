@@ -4,6 +4,7 @@
 	<menu id="info" title="msg://gr.maravelias.myeconomics/menu.info.title" opened="true">
 		<item view="myec_ViewTraderBalances.list"
 			  title="msg://gr.maravelias.myeconomics.view.viewtraderbalances/viewTraderBalancesListView.title"/>
+		<item view="myec_Trader.info" title="msg://gr.maravelias.myeconomics.view.trader/traderInfoView.title"/>
 	</menu>
 
     <menu id="application" title="msg://gr.maravelias.myeconomics/menu.application.title" opened="true">
