@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://jmix.io/schema/flowui/fragment">
+	<data>
+		<collection id="supplierTransactionsDc"
+					class="gr.maravelias.myeconomics.entity.BankTransaction">
+			<fetchPlan extends="_base">
+				<property name="trader" fetch="AUTO" fetchPlan="_base"/>
+			</fetchPlan>
+			<loader id="supplierTransactionsDl" readOnly="true">
+				<query>
+					<![CDATA[select e from myec_BankTransaction e where e.trader.traderType like 'SUPPLIER' order by e.transactionDate desc ]]>
+				</query>
+			</loader>
+		</collection>
+	</data>
+
+	<content>
+		<vbox id="root">
+			<dataGrid id="supplierTransactionsDataGrid"
+					  width="100%"
+					  minHeight="20em"
+					  dataContainer="supplierTransactionsDc"
+					  columnReorderingAllowed="true"
+					  selectionMode="MULTI">
+				<actions>
+					<action id="refresh" type="list_refresh"/>
+				</actions>
+				<columns resizable="true">
+					<column property="transactionDate"/>
+					<column property="amount"/>
+					<column property="trader"/>
+				</columns>
+			</dataGrid>
+		</vbox>
+	</content>
+</fragment>

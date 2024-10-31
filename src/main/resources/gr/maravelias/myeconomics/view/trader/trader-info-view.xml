@@ -31,7 +31,7 @@
 
 				<fragment class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
 
-			<fragment class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
+			<fragment class="gr.maravelias.myeconomics.view.supplierstransactionsfragment.SuppliersTransactionsFragment"/>
 
 
 		</vbox>
