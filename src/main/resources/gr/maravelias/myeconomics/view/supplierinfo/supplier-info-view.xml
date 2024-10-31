@@ -30,7 +30,11 @@
 
 			<fragment id="suppliersInvoicesFragment" class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
 
-			<fragment id="suppliersTransactionsFragment" class="gr.maravelias.myeconomics.view.supplierstransactionsfragment.SuppliersTransactionsFragment"/>
+			<fragment id="suppliersTransactionsFragment" class="gr.maravelias.myeconomics.view.supplierstransactionsfragment.SuppliersTransactionsFragment">
+				<properties>
+					<property name="traderId" value="traderId"/>
+				</properties>
+			</fragment>
 
 		</vbox>
 	</layout>
