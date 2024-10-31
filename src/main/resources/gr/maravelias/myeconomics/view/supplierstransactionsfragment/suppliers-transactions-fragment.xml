@@ -8,7 +8,7 @@
 			</fetchPlan>
 			<loader id="supplierTransactionsDl" readOnly="true">
 				<query>
-					<![CDATA[select e from myec_BankTransaction e where e.trader.traderType like 'SUPPLIER' order by e.transactionDate desc ]]>
+					<![CDATA[select e from myec_BankTransaction e where e.trader.id =  :traderId  order by e.transactionDate desc ]]>
 				</query>
 			</loader>
 		</collection>

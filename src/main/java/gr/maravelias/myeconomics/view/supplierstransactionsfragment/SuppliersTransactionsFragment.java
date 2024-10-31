@@ -1,5 +1,7 @@
 package gr.maravelias.myeconomics.view.supplierstransactionsfragment;
 
+import java.util.UUID;
+
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import gr.maravelias.myeconomics.entity.BankTransaction;
 import io.jmix.flowui.fragment.Fragment;
@@ -18,6 +20,12 @@ public class SuppliersTransactionsFragment extends Fragment<VerticalLayout> {
 
     @Subscribe(target = Target.HOST_CONTROLLER)
     public void onHostBeforeShow(View.BeforeShowEvent event) {
+
+        //supplierTransactionsDl.load();
+    }
+
+    public void setTraderId(UUID traderId) {
+        supplierTransactionsDl.setParameter("traderId", traderId);
         supplierTransactionsDl.load();
     }
 

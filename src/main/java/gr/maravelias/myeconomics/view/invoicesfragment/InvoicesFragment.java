@@ -1,5 +1,7 @@
 package gr.maravelias.myeconomics.view.invoicesfragment;
 
+import java.util.UUID;
+
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import gr.maravelias.myeconomics.entity.ExpenseInvoice;
 import io.jmix.flowui.fragment.Fragment;
@@ -18,6 +20,12 @@ public class InvoicesFragment extends Fragment<VerticalLayout> {
 
     @Subscribe(target = Target.HOST_CONTROLLER)
     public void onHostBeforeShow(View.BeforeShowEvent event) {
+
+        //expenseInvoicesDl.load();
+    }
+
+    public void setTraderId(UUID traderId) {
+        expenseInvoicesDl.setParameter("traderId", traderId);
         expenseInvoicesDl.load();
     }
 }
