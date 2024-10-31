@@ -31,6 +31,8 @@
 
 				<fragment class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
 
+			<fragment class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
+
 
 		</vbox>
 	</layout>
