@@ -28,10 +28,9 @@
 		<vbox>
 			<select id="supplierSelect" label="Supplier" itemsContainer="tradersDc"
 						helperText="Select an supplier whose address to display" minWidth="20em"/>
-			<hbox>
+
 				<fragment class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
-				<fragment class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
-			</hbox>
+
 
 		</vbox>
 	</layout>

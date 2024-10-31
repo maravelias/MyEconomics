@@ -9,7 +9,7 @@
 			</fetchPlan>
 			<loader id="expenseInvoicesDl" readOnly="true">
 				<query>
-					<![CDATA[select e from myec_ExpenseInvoice e where e.trader.traderType like 'SUPPLIER' order by e.transactionDate DESC ]]>
+					<![CDATA[select e from myec_ExpenseInvoice e ]]>
 				</query>
 			</loader>
 		</collection>
