@@ -1,4 +1,5 @@
-package gr.maravelias.myeconomics.view.trader;
+package gr.maravelias.myeconomics.view.supplierinfo;
+
 
 import java.util.UUID;
 
@@ -7,20 +8,17 @@ import gr.maravelias.myeconomics.entity.Trader;
 import gr.maravelias.myeconomics.view.main.MainView;
 import gr.maravelias.myeconomics.view.supplierstransactionsfragment.SuppliersTransactionsFragment;
 import io.jmix.flowui.model.InstanceContainer;
-import io.jmix.flowui.view.DialogMode;
-import io.jmix.flowui.view.StandardListView;
+import io.jmix.flowui.view.StandardView;
 import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.Target;
 import io.jmix.flowui.view.ViewController;
 import io.jmix.flowui.view.ViewDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-@Route(value = "tradersinfo", layout = MainView.class)
-@ViewController("myec_Trader.info")
-@ViewDescriptor("trader-info-view.xml")
-@DialogMode(width = "64em")
-public class TraderInfoView extends StandardListView<Trader> {
+@Route(value = "supplier-info-view", layout = MainView.class)
+@ViewController("myec_SupplierInfoView")
+@ViewDescriptor("supplier-info-view.xml")
+public class SupplierInfoView extends StandardView {
 
     @Autowired
     private gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment suppliersInvoicesFragment;
@@ -39,5 +37,5 @@ public class TraderInfoView extends StandardListView<Trader> {
             suppliersTransactionsFragment.setTraderId(traderId);
         }
     }
-}
 
+}

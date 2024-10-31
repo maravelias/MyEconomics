@@ -5,6 +5,8 @@
 		<item view="myec_ViewTraderBalances.list"
 			  title="msg://gr.maravelias.myeconomics.view.viewtraderbalances/viewTraderBalancesListView.title"/>
 		<item view="myec_Trader.info" title="msg://gr.maravelias.myeconomics.view.trader/traderInfoView.title"/>
+		<item view="myec_SupplierInfoView"
+			  title="msg://gr.maravelias.myeconomics.view.supplierinfo/supplierInfoView.title"/>
 	</menu>
 
     <menu id="application" title="msg://gr.maravelias.myeconomics/menu.application.title" opened="true">
