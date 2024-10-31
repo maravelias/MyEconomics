@@ -28,13 +28,15 @@
 			<select id="supplierSelect" label="Supplier" itemsContainer="tradersDc"
 					helperText="Select an supplier whose info to display" minWidth="20em"/>
 
-			<fragment id="suppliersInvoicesFragment" class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
 
-			<fragment id="suppliersTransactionsFragment" class="gr.maravelias.myeconomics.view.supplierstransactionsfragment.SuppliersTransactionsFragment">
-				<properties>
-					<property name="traderId" value="traderId"/>
-				</properties>
-			</fragment>
+			<tabSheet width="100%">
+				<tab id="tab1" label="Timologia">
+					<fragment id="suppliersInvoicesFragment" class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
+				</tab>
+				<tab id="tab2" label="Pliromes">
+					<fragment id="suppliersTransactionsFragment" class="gr.maravelias.myeconomics.view.supplierstransactionsfragment.SuppliersTransactionsFragment"/>
+				</tab>
+			</tabSheet>
 
 		</vbox>
 	</layout>
