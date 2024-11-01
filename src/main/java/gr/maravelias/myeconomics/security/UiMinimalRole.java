@@ -25,7 +25,7 @@ public interface UiMinimalRole {
 
     String CODE = "ui-minimal";
 
-    @ViewPolicy(viewIds = {"myec_MainView", "myec_Trader.list", "myec_BankAccount.list", "myec_BankAccount.detail", "flowui_AddConditionView", "flowui_GroupFilterCondition.detail", "flowui_PropertyFilterCondition.detail", "flowui_JpqlFilterCondition.detail", "myec_BankTransaction.list", "myec_BankTransaction.detail", "myec_ExpenseInvoice.list", "myec_ExpenseInvoice.detail", "myec_ViewTraderBalances.list"})
+    @ViewPolicy(viewIds = {"myec_MainView", "myec_Trader.list", "myec_BankAccount.list", "myec_BankAccount.detail", "flowui_AddConditionView", "flowui_GroupFilterCondition.detail", "flowui_PropertyFilterCondition.detail", "flowui_JpqlFilterCondition.detail", "myec_BankTransaction.list", "myec_BankTransaction.detail", "myec_ExpenseInvoice.list", "myec_ExpenseInvoice.detail", "myec_ViewTraderBalances.list", "myec_SupplierInfoView"})
     void main();
 
     @ViewPolicy(viewIds = "myec_LoginView")
@@ -36,7 +36,7 @@ public interface UiMinimalRole {
     @EntityAttributePolicy(entityClass = KeyValueEntity.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
     void keyValueEntity();
 
-    @MenuPolicy(menuIds = {"myec_Trader.list", "myec_BankAccount.list", "myec_BankTransaction.list", "myec_ExpenseInvoice.list", "myec_ViewTraderBalances.list"})
+    @MenuPolicy(menuIds = {"myec_Trader.list", "myec_BankAccount.list", "myec_BankTransaction.list", "myec_ExpenseInvoice.list", "myec_ViewTraderBalances.list", "myec_SupplierInfoView"})
     void screens();
 
     @EntityAttributePolicy(entityClass = Trader.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)

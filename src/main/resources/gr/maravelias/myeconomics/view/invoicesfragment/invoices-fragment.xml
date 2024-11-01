@@ -14,23 +14,32 @@
 			</loader>
 		</collection>
 	</data>
-
+	<actions>
+		<action id="selectAction" type="lookup_select"/>
+		<action id="discardAction" type="lookup_discard"/>
+	</actions>
 	<content>
-		<vbox id="root">
+		<vbox id="root" height="100%">
+			<hbox id="buttonsPanel" classNames="buttons-panel">
+				<button id="refreshBtn" action="expenseInvoicesDataGrid.refresh"/>
+				<simplePagination id="pagination" dataLoader="expenseInvoicesDl"/>
+			</hbox>
 			<dataGrid id="expenseInvoicesDataGrid"
 					  width="100%"
 					  minHeight="20em"
 					  dataContainer="expenseInvoicesDc"
 					  columnReorderingAllowed="true"
-					  selectionMode="MULTI">
+					  aggregatable="true"
+					  aggregationPosition="TOP">
 				<actions>
 					<action id="refresh" type="list_refresh"/>
 				</actions>
 				<columns resizable="true">
 					<column property="transactionDate"/>
-					<column property="amount"/>
+					<column property="amount">
+						<aggregation type="SUM"/>
+					</column>
 					<column property="invoiceNumber"/>
-					<column property="trader"/>
 				</columns>
 			</dataGrid>
 		</vbox>

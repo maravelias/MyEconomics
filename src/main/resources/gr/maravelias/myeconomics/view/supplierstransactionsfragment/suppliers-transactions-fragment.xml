@@ -14,21 +14,32 @@
 		</collection>
 	</data>
 
+	<actions>
+		<action id="selectAction" type="lookup_select"/>
+		<action id="discardAction" type="lookup_discard"/>
+	</actions>
+
 	<content>
-		<vbox id="root">
+		<vbox id="root" height="100%">
+			<hbox id="buttonsPanel" classNames="buttons-panel">
+				<button id="refreshBtn" action="supplierTransactionsDataGrid.refresh"/>
+				<simplePagination id="pagination" dataLoader="supplierTransactionsDl"/>
+			</hbox>
 			<dataGrid id="supplierTransactionsDataGrid"
 					  width="100%"
 					  minHeight="20em"
 					  dataContainer="supplierTransactionsDc"
 					  columnReorderingAllowed="true"
-					  selectionMode="MULTI">
+					  aggregatable="true"
+					  aggregationPosition="TOP">
 				<actions>
 					<action id="refresh" type="list_refresh"/>
 				</actions>
 				<columns resizable="true">
 					<column property="transactionDate"/>
-					<column property="amount"/>
-					<column property="trader"/>
+					<column property="amount">
+						<aggregation type="SUM"/>
+					</column>
 				</columns>
 			</dataGrid>
 		</vbox>
