@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://jmix.io/schema/flowui/fragment">
+
+	<data>
+		<collection id="expenseInvoicesDc"
+					class="gr.maravelias.myeconomics.entity.ExpenseInvoice">
+			<fetchPlan extends="_base">
+				<property name="trader" fetch="AUTO" fetchPlan="_base"/>
+			</fetchPlan>
+			<loader id="expenseInvoicesDl" readOnly="true">
+				<query>
+					<![CDATA[select e from myec_ExpenseInvoice e where e.trader.id =  :traderId  order by e.transactionDate desc ]]>
+				</query>
+			</loader>
+		</collection>
+	</data>
+	<actions>
+		<action id="selectAction" type="lookup_select"/>
+		<action id="discardAction" type="lookup_discard"/>
+	</actions>
+	<content>
+		<vbox id="root" height="100%">
+			<hbox id="buttonsPanel" classNames="buttons-panel">
+				<button id="refreshBtn" action="expenseInvoicesDataGrid.refresh"/>
+				<simplePagination id="pagination" dataLoader="expenseInvoicesDl"/>
+			</hbox>
+			<dataGrid id="expenseInvoicesDataGrid"
+					  width="100%"
+					  minHeight="20em"
+					  dataContainer="expenseInvoicesDc"
+					  columnReorderingAllowed="true"
+					  aggregatable="true"
+					  aggregationPosition="TOP">
+				<actions>
+					<action id="refresh" type="list_refresh"/>
+				</actions>
+				<columns resizable="true">
+					<column property="transactionDate"/>
+					<column property="amount">
+						<aggregation type="SUM"/>
+					</column>
+					<column property="invoiceNumber"/>
+				</columns>
+			</dataGrid>
+		</vbox>
+	</content>
+</fragment>

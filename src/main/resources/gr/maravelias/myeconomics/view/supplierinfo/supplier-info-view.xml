@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+	  title="msg://supplierInfoView.title"
+	  focusComponent="supplierSelect">
+	<data>
+		<collection id="tradersDc"
+					class="gr.maravelias.myeconomics.entity.Trader">
+			<fetchPlan extends="_instance_name">
+				<property name="createdBy"/>
+				<property name="createdDate"/>
+				<property name="lastModifiedBy"/>
+				<property name="lastModifiedDate"/>
+			</fetchPlan>
+			<loader id="tradersDl" readOnly="true">
+				<query>
+					<![CDATA[select e from myec_Trader e where e.traderType like 'SUPPLIER' ]]>
+				</query>
+			</loader>
+		</collection>
+	</data>
+	<facets>
+		<dataLoadCoordinator auto="true"/>
+
+	</facets>
+
+	<layout>
+		<vbox>
+			<select id="supplierSelect" label="msg://supplierSelect.label" itemsContainer="tradersDc"
+					helperText="msg://supplierSelect.helperText" minWidth="20em"/>
+
+
+			<tabSheet width="100%">
+				<tab id="tab1" label="msg://tab1.label">
+					<fragment id="suppliersInvoicesFragment" class="gr.maravelias.myeconomics.view.invoicesfragment.InvoicesFragment"/>
+				</tab>
+				<tab id="tab2" label="msg://tab2.label">
+					<fragment id="suppliersTransactionsFragment" class="gr.maravelias.myeconomics.view.supplierstransactionsfragment.SuppliersTransactionsFragment"/>
+				</tab>
+			</tabSheet>
+
+		</vbox>
+	</layout>
+</view>
