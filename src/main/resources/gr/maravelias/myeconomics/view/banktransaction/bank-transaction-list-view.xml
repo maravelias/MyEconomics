@@ -43,6 +43,8 @@
 				  width="100%"
 				  minHeight="20em"
 				  dataContainer="bankTransactionsDc"
+				  aggregatable="true"
+				  aggregationPosition="TOP"
 				  columnReorderingAllowed="true">
 			<actions>
 				<action id="create" type="list_create"/>
@@ -52,7 +54,9 @@
 			</actions>
 			<columns resizable="true">
 				<column property="transactionType"/>
-				<column property="amount"/>
+				<column property="amount">
+					<aggregation type="SUM"/>
+				</column>
 				<column property="transactionDate"/>
 				<column property="trader"/>
 			</columns>
