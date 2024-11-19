@@ -9,7 +9,7 @@
 			<fetchPlan extends="_base"/>
 			<loader id="viewTraderBalancesesDl" readOnly="true">
 				<query>
-					<![CDATA[select e from myec_ViewTraderBalances e order by e desc ]]>
+					<![CDATA[select e from myec_ViewTraderBalances e order by e.latestTransactionDate desc ]]>
 				</query>
 			</loader>
 		</collection>
