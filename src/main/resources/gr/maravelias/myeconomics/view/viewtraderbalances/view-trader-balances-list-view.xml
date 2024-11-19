@@ -9,7 +9,7 @@
 			<fetchPlan extends="_base"/>
 			<loader id="viewTraderBalancesesDl" readOnly="true">
 				<query>
-					<![CDATA[select e from myec_ViewTraderBalances e]]>
+					<![CDATA[select e from myec_ViewTraderBalances e order by e desc ]]>
 				</query>
 			</loader>
 		</collection>
@@ -38,7 +38,7 @@
 				  width="100%"
 				  minHeight="20em"
 				  dataContainer="viewTraderBalancesesDc"
-				  columnReorderingAllowed="true" aggregatable="true" aggregationPosition="BOTTOM">
+				  columnReorderingAllowed="true" aggregatable="true" aggregationPosition="TOP">
 			<actions>
 				<action id="refresh" type="list_refresh"/>
 			</actions>
