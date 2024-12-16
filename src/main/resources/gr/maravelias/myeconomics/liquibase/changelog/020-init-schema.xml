@@ -196,4 +196,45 @@
 
 		</createView>
 	</changeSet>
+
+	<changeSet id="9" author="myec">
+		<createView viewName="view_transactions"
+					encoding="UTF-8"
+					fullDefinition="false"
+					remarks="A String"
+					replaceIfExists="true">
+			select
+				'PAYMENT' as transaction_type,
+				t.amount ,
+				t.transaction_date ,
+				EXTRACT(YEAR FROM t.transaction_date) AS transaction_year,
+				EXTRACT(QUARTER FROM t.transaction_date) AS transaction_quarter,
+				EXTRACT(MONTH FROM t.transaction_date) AS transaction_month,
+				tr.title AS trader_title
+			from myec_bank_transaction t
+					 JOIN myec_trader tr
+						  ON t.trader_id = tr.id
+					 JOIN myec_bank_account ba
+						  ON t.bank_id = ba.id
+
+			WHERE t.transaction_type = 'TRANSFER_TO_TRADER'
+
+			UNION ALL
+
+			select
+				'INVOICE' as transaction_type,
+				- invoice.amount as amount ,
+				invoice.transaction_date ,
+				EXTRACT(YEAR FROM invoice.transaction_date) AS transaction_year,
+				EXTRACT(QUARTER FROM invoice.transaction_date) AS transaction_quarter,
+				EXTRACT(MONTH FROM invoice.transaction_date) AS transaction_month,
+				tr.title AS trader_title
+
+			from myec_expense_invoice invoice
+					 JOIN myec_trader tr
+						  ON invoice.trader_id = tr.id
+
+		</createView>
+	</changeSet>
+
 </databaseChangeLog>
