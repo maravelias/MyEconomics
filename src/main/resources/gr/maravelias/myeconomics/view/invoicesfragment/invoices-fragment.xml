@@ -28,17 +28,13 @@
 					  width="100%"
 					  minHeight="20em"
 					  dataContainer="expenseInvoicesDc"
-					  columnReorderingAllowed="true"
-					  aggregatable="true"
-					  aggregationPosition="TOP">
+					  columnReorderingAllowed="true">
 				<actions>
 					<action id="refresh" type="list_refresh"/>
 				</actions>
 				<columns resizable="true">
 					<column property="transactionDate"/>
-					<column property="amount">
-						<aggregation type="SUM"/>
-					</column>
+					<column property="amount"/>
 					<column property="invoiceNumber"/>
 				</columns>
 			</dataGrid>
