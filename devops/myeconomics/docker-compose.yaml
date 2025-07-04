@@ -1,8 +1,47 @@
-services:
+volumes:
+  myeconomics_db_data:
+    driver: local
+  myeconomics_pgadmin:
+    driver: local
 
-  myeconomics:
-    container_name: myeconomics
-    image: docker.io/maravelias/myeconomics:0.0.1
+networks:
+  myeconomics_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.1.0/24
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:16.4
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: p@ssw0rd!
+      POSTGRES_DB: myeconomics
+      PGDATA: /data/postgres
+    volumes:
+      - myeconomics_db_data:/data/postgres
     ports:
-      - "8080:8080"
+      - 5431:5432
+      - 5432:5432
+    networks:
+      myeconomics_network:
+        ipv4_address: 10.10.1.2
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:8.12.0
+    environment:
+      PGADMIN_DEFAULT_EMAIL: giorgos@maravelias.eu
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - myeconomics_pgadmin:/var/lib/pgadmin
+    ports:
+      - "8982:80"
+    networks:
+      myeconomics_network:
+        ipv4_address: 10.10.1.3
     restart: unless-stopped
