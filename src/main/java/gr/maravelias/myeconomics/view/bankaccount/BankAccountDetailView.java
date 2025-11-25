@@ -12,5 +12,4 @@ import io.jmix.flowui.view.ViewDescriptor;
 @ViewController("myec_BankAccount.detail")
 @ViewDescriptor("bank-account-detail-view.xml")
 @EditedEntityContainer("bankAccountDc")
-public class BankAccountDetailView extends StandardDetailView<BankAccount> {
-}
+public class BankAccountDetailView extends StandardDetailView<BankAccount> {}

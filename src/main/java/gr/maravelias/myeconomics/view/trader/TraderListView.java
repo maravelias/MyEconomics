@@ -34,107 +34,101 @@ import io.jmix.flowui.view.ViewValidation;
 @DialogMode(width = "64em")
 public class TraderListView extends StandardListView<Trader> {
 
-    @ViewComponent
-    private DataContext dataContext;
+  @ViewComponent private DataContext dataContext;
 
-    @ViewComponent
-    private CollectionContainer<Trader> tradersDc;
+  @ViewComponent private CollectionContainer<Trader> tradersDc;
 
-    @ViewComponent
-    private InstanceContainer<Trader> traderDc;
+  @ViewComponent private InstanceContainer<Trader> traderDc;
 
-    @ViewComponent
-    private InstanceLoader<Trader> traderDl;
+  @ViewComponent private InstanceLoader<Trader> traderDl;
 
-    @ViewComponent
-    private VerticalLayout listLayout;
+  @ViewComponent private VerticalLayout listLayout;
 
-    @ViewComponent
-    private FormLayout form;
+  @ViewComponent private FormLayout form;
 
-    @ViewComponent
-    private HorizontalLayout detailActions;
+  @ViewComponent private HorizontalLayout detailActions;
 
-    @ViewComponent
-    private JmixTextArea notesField ;
+  @ViewComponent private JmixTextArea notesField;
 
-    @Subscribe
-    public void onInit(final InitEvent event) {
-        notesField.getStyle().set("resize", "both");
-        notesField.getStyle().set("overflow", "auto");
-        updateControls(false);
+  @Subscribe
+  public void onInit(final InitEvent event) {
+    notesField.getStyle().set("resize", "both");
+    notesField.getStyle().set("overflow", "auto");
+    updateControls(false);
+  }
+
+  @Subscribe("tradersDataGrid.create")
+  public void onTradersDataGridCreate(final ActionPerformedEvent event) {
+    dataContext.clear();
+    Trader entity = dataContext.create(Trader.class);
+    traderDc.setItem(entity);
+    updateControls(true);
+  }
+
+  @Subscribe("tradersDataGrid.edit")
+  public void onTradersDataGridEdit(final ActionPerformedEvent event) {
+    updateControls(true);
+  }
+
+  @Subscribe("saveBtn")
+  public void onSaveButtonClick(final ClickEvent<JmixButton> event) {
+    Trader item = traderDc.getItem();
+    ValidationErrors validationErrors = validateView(item);
+    if (!validationErrors.isEmpty()) {
+      ViewValidation viewValidation = getViewValidation();
+      viewValidation.showValidationErrors(validationErrors);
+      viewValidation.focusProblemComponent(validationErrors);
+      return;
     }
+    dataContext.save();
+    tradersDc.replaceItem(item);
+    updateControls(false);
+  }
 
-    @Subscribe("tradersDataGrid.create")
-    public void onTradersDataGridCreate(final ActionPerformedEvent event) {
-        dataContext.clear();
-        Trader entity = dataContext.create(Trader.class);
-        traderDc.setItem(entity);
-        updateControls(true);
+  @Subscribe("cancelBtn")
+  public void onCancelButtonClick(final ClickEvent<JmixButton> event) {
+    dataContext.clear();
+    traderDl.load();
+    updateControls(false);
+  }
+
+  @Subscribe(id = "tradersDc", target = Target.DATA_CONTAINER)
+  public void onTradersDcItemChange(final InstanceContainer.ItemChangeEvent<Trader> event) {
+    Trader entity = event.getItem();
+    dataContext.clear();
+    if (entity != null) {
+      traderDl.setEntityId(entity.getId());
+      traderDl.load();
+    } else {
+      traderDl.setEntityId(null);
+      traderDc.setItem(null);
     }
+  }
 
-    @Subscribe("tradersDataGrid.edit")
-    public void onTradersDataGridEdit(final ActionPerformedEvent event) {
-        updateControls(true);
+  protected ValidationErrors validateView(Trader entity) {
+    ViewValidation viewValidation = getViewValidation();
+    ValidationErrors validationErrors = viewValidation.validateUiComponents(form);
+    if (!validationErrors.isEmpty()) {
+      return validationErrors;
     }
+    validationErrors.addAll(viewValidation.validateBeanGroup(UiCrossFieldChecks.class, entity));
+    return validationErrors;
+  }
 
-    @Subscribe("saveBtn")
-    public void onSaveButtonClick(final ClickEvent<JmixButton> event) {
-        Trader item = traderDc.getItem();
-        ValidationErrors validationErrors = validateView(item);
-        if (!validationErrors.isEmpty()) {
-            ViewValidation viewValidation = getViewValidation();
-            viewValidation.showValidationErrors(validationErrors);
-            viewValidation.focusProblemComponent(validationErrors);
-            return;
-        }
-        dataContext.save();
-        tradersDc.replaceItem(item);
-        updateControls(false);
-    }
-
-    @Subscribe("cancelBtn")
-    public void onCancelButtonClick(final ClickEvent<JmixButton> event) {
-        dataContext.clear();
-        traderDl.load();
-        updateControls(false);
-    }
-
-    @Subscribe(id = "tradersDc", target = Target.DATA_CONTAINER)
-    public void onTradersDcItemChange(final InstanceContainer.ItemChangeEvent<Trader> event) {
-        Trader entity = event.getItem();
-        dataContext.clear();
-        if (entity != null) {
-            traderDl.setEntityId(entity.getId());
-            traderDl.load();
-        } else {
-            traderDl.setEntityId(null);
-            traderDc.setItem(null);
-        }
-    }
-
-    protected ValidationErrors validateView(Trader entity) {
-        ViewValidation viewValidation = getViewValidation();
-        ValidationErrors validationErrors = viewValidation.validateUiComponents(form);
-        if (!validationErrors.isEmpty()) {
-            return validationErrors;
-        }
-        validationErrors.addAll(viewValidation.validateBeanGroup(UiCrossFieldChecks.class, entity));
-        return validationErrors;
-    }
-
-    private void updateControls(boolean editing) {
-        form.getChildren().forEach(component -> {
-            if (component instanceof HasValueAndElement<?, ?> field) {
+  private void updateControls(boolean editing) {
+    form.getChildren()
+        .forEach(
+            component -> {
+              if (component instanceof HasValueAndElement<?, ?> field) {
                 field.setReadOnly(!editing);
-            }
-        });
+              }
+            });
 
-        detailActions.setVisible(editing);
-        listLayout.setEnabled(!editing);
-    }
+    detailActions.setVisible(editing);
+    listLayout.setEnabled(!editing);
+  }
 
-    private ViewValidation getViewValidation() {
-        return getApplicationContext().getBean(ViewValidation.class);
-    }
+  private ViewValidation getViewValidation() {
+    return getApplicationContext().getBean(ViewValidation.class);
+  }
 }

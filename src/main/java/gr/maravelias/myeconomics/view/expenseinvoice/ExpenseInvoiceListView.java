@@ -9,11 +9,9 @@ import io.jmix.flowui.view.StandardListView;
 import io.jmix.flowui.view.ViewController;
 import io.jmix.flowui.view.ViewDescriptor;
 
-
 @Route(value = "expenseInvoices", layout = MainView.class)
 @ViewController("myec_ExpenseInvoice.list")
 @ViewDescriptor("expense-invoice-list-view.xml")
 @LookupComponent("expenseInvoicesDataGrid")
 @DialogMode(width = "64em")
-public class ExpenseInvoiceListView extends StandardListView<ExpenseInvoice> {
-}
+public class ExpenseInvoiceListView extends StandardListView<ExpenseInvoice> {}

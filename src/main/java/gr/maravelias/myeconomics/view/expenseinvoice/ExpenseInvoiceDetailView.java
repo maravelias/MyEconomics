@@ -12,5 +12,4 @@ import io.jmix.flowui.view.ViewDescriptor;
 @ViewController("myec_ExpenseInvoice.detail")
 @ViewDescriptor("expense-invoice-detail-view.xml")
 @EditedEntityContainer("expenseInvoiceDc")
-public class ExpenseInvoiceDetailView extends StandardDetailView<ExpenseInvoice> {
-}
+public class ExpenseInvoiceDetailView extends StandardDetailView<ExpenseInvoice> {}
