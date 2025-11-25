@@ -9,11 +9,9 @@ import io.jmix.flowui.view.StandardListView;
 import io.jmix.flowui.view.ViewController;
 import io.jmix.flowui.view.ViewDescriptor;
 
-
 @Route(value = "bankTransactions", layout = MainView.class)
 @ViewController("myec_BankTransaction.list")
 @ViewDescriptor("bank-transaction-list-view.xml")
 @LookupComponent("bankTransactionsDataGrid")
 @DialogMode(width = "64em")
-public class BankTransactionListView extends StandardListView<BankTransaction> {
-}
+public class BankTransactionListView extends StandardListView<BankTransaction> {}
